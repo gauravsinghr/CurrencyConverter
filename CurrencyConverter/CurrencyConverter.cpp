@@ -2,8 +2,12 @@
 #include<string>
 #include "Include/CErrorCode.h"
 #include "Include/CCurrencyConversion.h"
-static constexpr const auto DEFAULTAMT = 1.00;
-static constexpr const auto INVALIDAMT = 0.00;
+
+// compile time const for default value of Amount
+static constexpr auto DEFAULTAMT = 1.00;
+
+//compile time const default val Ammount
+static constexpr auto INVALIDAMT = 0.00;
 
 /// <summary>
 /// This is main thread of application
@@ -15,8 +19,6 @@ int main()
         std::string convertFrom{ "EUR" };
         std::string convertTo{ "USD" };
         auto totalAmountToConvert = DEFAULTAMT;
-       // std::cout << "Enter Currency to be convert " << std::endl;
-        //std::cin >> convertFrom;
         std::cout << "Base currency is : " << convertFrom << std::endl;
         std::cout << "Enter Amount to be convert " << std::endl;
         std::cout << "Amount : ";
