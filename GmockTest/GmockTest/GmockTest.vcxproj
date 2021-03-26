@@ -33,6 +33,7 @@
   <ImportGroup Label="PropertySheets" />
   <PropertyGroup Label="UserMacros" />
   <ItemGroup>
+    <ClInclude Include="CurrencyConversionRateInterface.h" />
     <ClInclude Include="MockFindCurrencyConversionRate.h" />
     <ClInclude Include="TestCurrencyConversionRate.h" />
     <ClInclude Include="MockDownLoadData.h" />

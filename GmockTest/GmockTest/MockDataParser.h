@@ -8,6 +8,6 @@ class MockDataParser : public ICDataParser
 {
 public:
 	MOCK_METHOD(double, getCurrencyConversionFactor, (const std::string currencyCode), (const, override));
-	MOCK_METHOD(void, parseData, (const std::string data), (override));
+	MOCK_METHOD(bool, parseData, (const std::string& data), (override));
 	MOCK_METHOD(std::string, getStringInJsonFormat, (), (const, override));
 };

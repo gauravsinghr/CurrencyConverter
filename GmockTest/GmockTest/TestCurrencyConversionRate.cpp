@@ -26,13 +26,18 @@ void TestCurrencyConversionRate::SetUp()
 {
 	m_DownLoadData = std::make_shared<MockDownloadData>();
 	m_curencyconversionFactor = std::make_shared<MockDataParser>();
-	CFindCurrencyConversionRate::getInstance().setObjectforDownloadData(m_DownLoadData);
+	m_currencyConversionRate = std::make_shared<CurrencyConversionRateInterface>(m_DownLoadData);
+	m_currencyConversionRateToParseData = std::make_shared<CurrencyConversionRateInterface>(CurrencyConversionRateInterface(m_curencyconversionFactor, m_DownLoadData));
+	//CFindCurrencyConversionRate::getInstance().setObjectforDownloadData(m_DownLoadData);
 }
-
 // this function call after each test performed
 void TestCurrencyConversionRate::TearDown()
 {
 
+}
+double TestCurrencyConversionRate::getCurrencyConversionRate(const std::string from, const std::string to, ErrorCode::CCurrencyConversionResult& err)
+{
+	return m_currencyConversionRate->getCurrencyConversionRate("EUR", "USD", err);
 }
 TEST_F(TestCurrencyConversionRate, getConversionRateTest)
 {
@@ -50,7 +55,7 @@ TEST_F(TestCurrencyConversionRate, getConversionRateTest)
 			}");
 		});
 	EXPECT_CALL(*m_DownLoadData, dataRequestCommand(_)).Times(1);
-	auto conversionRate = CFindCurrencyConversionRate::getInstance().getCurrencyConversionRate("EUR", "USD", err);
+	auto conversionRate = m_currencyConversionRate->getCurrencyConversionRate("EUR", "USD", err);
 	std::cout<< "conversionRate = " <<conversionRate << std::endl;
 	EXPECT_EQ(conversionRate,1.196008);
 }
@@ -62,10 +67,11 @@ TEST_F(TestCurrencyConversionRate, getConversionRateTestWhenValueisEmpty)
 		return std::string("");
 		});
 	EXPECT_CALL(*m_DownLoadData, dataRequestCommand(_)).Times(1);
-	auto conversionRate = CFindCurrencyConversionRate::getInstance().getCurrencyConversionRate("EUR", "USD", err);
+	auto conversionRate = m_currencyConversionRate->getCurrencyConversionRate("EUR", "USD", err);
 	std::cout << "conversionRate = " << conversionRate << std::endl;
 	EXPECT_EQ(conversionRate, -1);
 }
+
 
 TEST_F(TestCurrencyConversionRate, getConversionRateTestWhenValueisIncorrect)
 {
@@ -83,15 +89,14 @@ TEST_F(TestCurrencyConversionRate, getConversionRateTestWhenValueisIncorrect)
 			}");
 		});
 	EXPECT_CALL(*m_DownLoadData, dataRequestCommand(_)).Times(1);
-	auto conversionRate = CFindCurrencyConversionRate::getInstance().getCurrencyConversionRate("EUR", "USD", err);
+	auto conversionRate = m_currencyConversionRate->getCurrencyConversionRate("EUR", "USD", err);
 	std::cout << "conversionRate = " << conversionRate << std::endl;
-	EXPECT_EQ(conversionRate, 0.0);
+	EXPECT_EQ(conversionRate, 0);
 }
-
 TEST_F(TestCurrencyConversionRate, getConversionFator)
 {
 	//Mock data Data download using CURL
-	CFindCurrencyConversionRate::getInstance().setObjectforCurrencyParser(m_curencyconversionFactor);
+	//CFindCurrencyConversionRate::getInstance().setObjectforCurrencyParser(m_curencyconversionFactor);
 	ErrorCode::CCurrencyConversionResult err = ErrorCode::CCurrencyConversionResult::CONVERSION_FAIL;
 	ON_CALL(*m_DownLoadData, dataRequestCommand).WillByDefault([](const std::string from) {
 		return std::string("{\
@@ -107,9 +112,9 @@ TEST_F(TestCurrencyConversionRate, getConversionFator)
 	EXPECT_CALL(*m_DownLoadData, dataRequestCommand(_)).Times(1);
 	//Mocking Data parser
 	ON_CALL(*m_curencyconversionFactor, getCurrencyConversionFactor).WillByDefault([](const std::string from) {
-		return 1.196008;
+		return 1.196010;
 		});
 	EXPECT_CALL(*m_curencyconversionFactor, getCurrencyConversionFactor(_)).Times(1);
-	auto conversionRate = CFindCurrencyConversionRate::getInstance().getCurrencyConversionRate("EUR", "USD", err);
-	EXPECT_EQ(conversionRate, 1.196008);
+	auto conversionRate = m_currencyConversionRateToParseData->getCurrencyConversionRate("EUR", "USD", err);
+	EXPECT_EQ(conversionRate, 1.196010);
 }

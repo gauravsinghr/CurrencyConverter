@@ -48,7 +48,7 @@ inline size_t CDownLoadData::callbackToWriteData(void* contents, size_t size, si
 /// </summary>
 /// <param name="from">base currency</param>
 /// <returns>data in string format</returns>
-std::string CDownLoadData::dataRequestCommand(const std::string from)
+std::string CDownLoadData::dataRequestCommand(const std::string& from)
 {
     if (nullptr != m_curlHandle) {
         auto requestUrl = generateRestURLForRequest(from);
@@ -76,7 +76,7 @@ std::string CDownLoadData::dataRequestCommand(const std::string from)
         {
             std::cout << "Error in CURL call. Error Code:" << m_result << std::endl;
         }
-
+        std::cout << "readData::buffer ========== 2 " << buffer<<std::endl;
         return buffer;
     }
     return "";

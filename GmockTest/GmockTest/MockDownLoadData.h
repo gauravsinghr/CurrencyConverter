@@ -7,5 +7,5 @@
 class MockDownloadData : public ICDownLoadData
 {
 public:
-	MOCK_METHOD(std::string,dataRequestCommand,(const std::string from),(override));
+	MOCK_METHOD(std::string,dataRequestCommand,(const std::string& from),(override));
 };

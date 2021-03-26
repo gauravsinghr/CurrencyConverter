@@ -5,15 +5,17 @@
 /// this function parse downloaded data to JSON format
 /// </summary>
 /// <param name="data">data inn string format</param>
-void CDataParser::parseData(const std::string data)
+bool CDataParser::parseData(const std::string& data)
 {
     Json::CharReaderBuilder builder;
     std::string err;
     const std::unique_ptr<Json::CharReader> reader(builder.newCharReader());
     if (!reader->parse(data.c_str(), data.c_str() + data.length(), &m_data, &err)){
-        std::cout << "ERROR in parsing!" << std::endl << err << std::endl;
-        return;
+        std::cout << "parseData::ERROR in parsing!" << std::endl << err << std::endl;
+        return false;
     }
+    std::cout << "m_data = " << m_data << std::endl;
+    return true;
 }
 /// <summary>
 /// Parameterise constructor to set input string

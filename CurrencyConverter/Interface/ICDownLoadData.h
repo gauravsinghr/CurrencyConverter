@@ -3,7 +3,7 @@
 class ICDownLoadData
 {
 public:
-	virtual std::string dataRequestCommand(const std::string from) = 0;
+	virtual std::string dataRequestCommand(const std::string& from) = 0;
 	ICDownLoadData() = default;
 	virtual ~ICDownLoadData() = default;
 };

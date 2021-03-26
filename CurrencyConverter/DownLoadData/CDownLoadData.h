@@ -7,7 +7,7 @@
 class CDownLoadData : public ICDownLoadData
 {
 public:
-	virtual std::string dataRequestCommand(const std::string from) override;
+	virtual std::string dataRequestCommand(const std::string& from) override;
 	CDownLoadData();
 	~CDownLoadData()=default;
 private:
