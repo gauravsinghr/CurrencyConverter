@@ -76,7 +76,6 @@ std::string CDownLoadData::dataRequestCommand(const std::string& from)
         {
             std::cout << "Error in CURL call. Error Code:" << m_result << std::endl;
         }
-        std::cout << "readData::buffer ========== 2 " << buffer<<std::endl;
         return buffer;
     }
     return "";

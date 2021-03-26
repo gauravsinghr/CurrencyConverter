@@ -14,7 +14,6 @@ bool CDataParser::parseData(const std::string& data)
         std::cout << "parseData::ERROR in parsing!" << std::endl << err << std::endl;
         return false;
     }
-    std::cout << "m_data = " << m_data << std::endl;
     return true;
 }
 /// <summary>

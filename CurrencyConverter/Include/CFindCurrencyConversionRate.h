@@ -24,5 +24,4 @@ public:
 	virtual double getCurrencyConversionRate(const std::string from, const std::string to, ErrorCode::CCurrencyConversionResult& err)const override;
 protected:
 	CFindCurrencyConversionRate(std::shared_ptr<ICDownLoadData> t_downLoadData);
-	CFindCurrencyConversionRate(std::shared_ptr<ICDataParser> t_dataParser, std::shared_ptr<ICDownLoadData> t_downLoadData);
 };
